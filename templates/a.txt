@@ -1,0 +1,3 @@
+{% for person in persons -%}
+    {{ person['COMPANY_CLASS Tel'] }} 
+{% endfor %}

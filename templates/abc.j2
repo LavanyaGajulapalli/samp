@@ -1,0 +1,74 @@
+{%- macro opt(company_size,Company_Tel,PRINCIPAL_BUSINESS_ACTIVITY_AS_PER_CIN_Tel,COMPANY_STATUS_Tel,Sector_Tel,Industry_Tel,ISIN) -%}
+    {{ '==కార్యకలపాలు =='+'\n' }}
+    
+    {%- set ref3_line="<ref>{{Cite web|url="+'https://www.kaggle.com/datasets/rowhitswami/all-indian-companies-registration-data-1900-2019 '+" | title="+"kaggle dataset"+"|website=www.kaggle.com|access-date=2022-04-22}}</ref> " -%}
+    {%- if company_size == "Giant" %}
+    {%- set ref4_line="<ref>{{Cite web|url="+'https://www.valueresearchonline.com/stocks/selector/capitalisation/1/giant/?custom-cols=ret1d%2Cpl52w%2Cph52w%2Cmcap%2Centval'+" | title="+"కంపెనీల జాబితా ఈ వెబ్సైటు నుండి సేకరించబడినవి"+"|website=www.valueresearchonline.com|access-date=2022-04-22}}</ref> " -%}
+    {%- elif company_size == "Large" %}
+    {%- set ref4_line="<ref>{{Cite web|url="+'https://www.valueresearchonline.com/stocks/selector/capitalisation/2/large-cap/?custom-cols=ret1d%2Cpl52w%2Cph52w%2Cmcap%2Centval'+" | title="+"కంపెనీల జాబితా ఈ వెబ్సైటు నుండి సేకరించబడినవి"+"|website=www.valueresearchonline.com|access-date=2022-04-22}}</ref> " -%}
+    {%- elif company_size == "Medium" %}
+    {%- set ref4_line="<ref>{{Cite web|url="+'https://www.valueresearchonline.com/stocks/selector/capitalisation/3/mid-cap/?custom-cols=ret1d%2Cpl52w%2Cph52w%2Cmcap%2Centval '+" | title="+"కంపెనీల జాబితా ఈ వెబ్సైటు నుండి సేకరించబడినవి"+"|website=www.valueresearchonline.com|access-date=2022-04-22}}</ref> " -%}
+    {%- elif company_size == "Small" %}
+    {%- set ref4_line="<ref>{{Cite web|url="+'https://www.valueresearchonline.com/stocks/selector/capitalisation/4/small-cap/?custom-cols=ret1d%2Cpl52w%2Cph52w%2Cmcap%2Centval'+" | title="+"కంపెనీల జాబితా ఈ వెబ్సైటు నుండి సేకరించబడినవి"+"|website=www.valueresearchonline.com|access-date=2022-04-22}}</ref> " -%}
+    {%- elif company_size == "Tiny" %}
+    {%- set ref4_line="<ref>{{Cite web|url="+'https://www.valueresearchonline.com/stocks/selector/capitalisation/5/tiny/?custom-cols=ret1d%2Cpl52w%2Cph52w%2Cmcap%2Centval'+" | title="+"కంపెనీల జాబితా ఈ వెబ్సైటు నుండి సేకరించబడినవి"+"|website=www.valueresearchonline.com|access-date=2022-04-22}}</ref> " -%}
+    {%- endif %}
+    {%- if Sector_Tel != 'NaN' and Industry_Tel != 'NaN' %}
+        {%- set ssector=[Company_Tel+" సంస్థ ప్రధాన కార్యకలాపాలు "+Sector_Tel+" రంగంలో కలవు. ఇది "+Industry_Tel+" వంటి పరిశ్రమలో సేవలను అందిస్తుంది"+ref4_line+". ",
+        ] | random
+        -%}
+        {{ssector}}
+    {%- elif Sector_Tel != 'NaN' and Industry_Tel == 'NaN' %}
+        {%- set ssector=[Company_Tel+" సంస్థ ప్రధాన కార్యకలాపాలు "+Sector_Tel+" రంగంలో కలవు"+ref4_line+". ",
+        ] | random
+        -%}
+        {{ssector}}
+    {%- elif Sector_Tel == 'NaN' and Industry_Tel != 'NaN' %}
+        {%- set ssector=[Company_Tel+" సంస్థ "+Industry_Tel+" పరిశ్రమలో సేవలను అందిస్తుంది"+ ref4_line+". ",
+        ] | random
+        -%}
+        {{ssector}}   
+    {%- endif %}
+    {%- if PRINCIPAL_BUSINESS_ACTIVITY_AS_PER_CIN_Tel != 'NaN' -%}
+        {%- set act_line= [ "సంస్థ నమోదు సంఖ్య(CIN) ప్రకారము దీని ప్రధాన వ్యాపారము "+PRINCIPAL_BUSINESS_ACTIVITY_AS_PER_CIN_Tel+ref3_line+". ",
+        ] | random
+        -%}
+        {{act_line}}
+    {%- endif -%}
+    {%- if COMPANY_STATUS_Tel!='NaN' and COMPANY_STATUS_Tel == 'చురుకుగా' or COMPANY_STATUS_Tel =='క్రియాశీల సంస్థ' -%}
+        {%- set status_line =[ "ఈ సంస్థ ప్రస్తుతం చురుకుగా కార్యకలాపాలు సాగిస్తుంది. ",
+        ] | random
+         -%}
+        {{status_line}}
+    {%- elif COMPANY_STATUS_Tel!='NaN' and COMPANY_STATUS_Tel == 'రద్దు చేయబడింది' or COMPANY_STATUS_Tel == 'కొట్టివేయు' -%}
+        {%- set status_line =[  "ఈ సంస్థ ప్రస్తుతం రద్దు చేయబడింది. " ,
+        ] | random
+            -%}
+        {{status_line}}
+    {%- elif COMPANY_STATUS_Tel!='NaN' and COMPANY_STATUS_Tel == 'సమ్మేళనం' -%}
+        {%- set status_line =[ "ఈ సంస్థ ప్రస్తుతం మరొక సంస్థతో సమ్మిళితమైంది. " ,
+        ] | random
+        -%}
+        {{status_line}}
+    {%- elif COMPANY_STATUS_Tel!='NaN' and COMPANY_STATUS_Tel == 'ఈఫైలింగ్ కోసం అందుబాటులో లేదు' -%}
+        {%- set status_line =[ "ఈ సంస్థ ప్రస్తుతం ఈఫైలింగ్ కోసం అందుబాటులో లేదు. ",
+        ] | random
+         -%}  
+         {{status_line}}     
+    {%- endif -%}
+        {%- set rt_line= [ "ఈ సంస్థకి ఆర్టీఏ ఎలాంటి సేవలను నిలిపివేయలేదు. ","ఆర్టీఏ ఈ సంస్థకి ఎలాంటి సేవలను నిలిపివేయలేదు. "
+        ] | random
+        -%}
+        {{rt_line}}
+   {%- if COMPANY_CATEGORY_Tel=='కంపెనీ షేర్ల ద్వారా పరిమితం చేయబడింది' -%}
+        {%- set cc_line= [ "ఇది షేర్ల ద్వారా పరిమితం చేయబడిన సంస్థ. ","ఈ సంస్థ షేర్ల ద్వారా పరిమితం చేయబడింది. "
+        ] | random
+        -%}
+        {{cc_line}}
+    {%- elif COMPANY_CATEGORY_Tel != 'NaN' and COMPANY_CATEGORY_Tel=='కంపెనీ గ్యారెంటీ ద్వారా లిమిటెడ్' -%}
+        {%- set cc_line= [ "ఇది గ్యారెంటీ ద్వారా పరిమితం చేయబడిన సంస్థ. ","ఈ సంస్థ గ్యారెంటీ ద్వారా పరిమితం చేయబడింది. "
+        ] | random
+        -%}
+        {{cc_line}}
+    {%- endif -%} 
+{%- endmacro -%}
